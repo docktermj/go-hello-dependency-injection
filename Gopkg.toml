@@ -1,0 +1,9 @@
+
+[[constraint]]
+  name = "github.com/docopt/docopt-go"
+  version = "0.6.2"
+
+[[constraint]]
+  name = "github.com/jstemmer/go-junit-report"
+  branch = "master"
+ 
