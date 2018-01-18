@@ -21,13 +21,13 @@ type D struct {
 	iteration int
 }
 
-func New(ctx context.Context, myA *a.A, myB *b.B, myC *c.C, waitGroup sync.WaitGroup) *D {
+func New(ctx context.Context, myA *a.A, myB *b.B, myC *c.C, waitGroup *sync.WaitGroup) *D {
 	return &D{
 		Context:   ctx,
 		A:         myA,
 		B:         myB,
 		C:         myC,
-		WaitGroup: &waitGroup,
+		WaitGroup: waitGroup,
 	}
 }
 

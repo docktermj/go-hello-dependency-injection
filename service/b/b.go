@@ -17,11 +17,11 @@ type B struct {
 	iteration int
 }
 
-func New(ctx context.Context, myA *a.A, waitGroup sync.WaitGroup) *B {
+func New(ctx context.Context, myA *a.A, waitGroup *sync.WaitGroup) *B {
 	return &B{
 		Context:   ctx,
 		A:         myA,
-		WaitGroup: &waitGroup,
+		WaitGroup: waitGroup,
 	}
 }
 

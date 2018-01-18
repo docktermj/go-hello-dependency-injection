@@ -16,11 +16,11 @@ type A struct {
 	iteration int
 }
 
-func New(ctx context.Context, greetings string, waitGroup sync.WaitGroup) *A {
+func New(ctx context.Context, waitGroup *sync.WaitGroup) *A {
 	return &A{
 		Context:   ctx,
-		Greetings: greetings,
-		WaitGroup: &waitGroup,
+		Greetings: "Hello world!",
+		WaitGroup: waitGroup,
 	}
 }
 

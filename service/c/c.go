@@ -19,12 +19,12 @@ type C struct {
 	iteration int
 }
 
-func New(ctx context.Context, myA *a.A, myB *b.B, waitGroup sync.WaitGroup) *C {
+func New(ctx context.Context, myA *a.A, myB *b.B, waitGroup *sync.WaitGroup) *C {
 	return &C{
 		Context:   ctx,
 		A:         myA,
 		B:         myB,
-		WaitGroup: &waitGroup,
+		WaitGroup: waitGroup,
 	}
 }
 
