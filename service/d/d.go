@@ -31,6 +31,14 @@ func New(ctx context.Context, myA *a.A, myB *b.B, myC *c.C, waitGroup *sync.Wait
 	}
 }
 
+func NewNoB(ctx context.Context, myA *a.A, myC *c.C, waitGroup *sync.WaitGroup) *D {
+	return &D{
+		Context: ctx,
+		A:       myA,
+		C:       myC,
+	}
+}
+
 // ----------------------------------------------------------------------------
 // Utility methods
 // ----------------------------------------------------------------------------
