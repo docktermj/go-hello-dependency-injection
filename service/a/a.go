@@ -16,6 +16,18 @@ type A struct {
 	iteration int
 }
 
+func New(ctx context.Context, waitGroup *sync.WaitGroup) *A {
+	return &A{
+		Context:   ctx,
+		Greetings: "Hello world!",
+		WaitGroup: waitGroup,
+	}
+}
+
+// ----------------------------------------------------------------------------
+// Utility methods
+// ----------------------------------------------------------------------------
+
 func (a A) Speak() string {
 	return fmt.Sprintf("A says: %s", a.Greetings)
 }

@@ -16,14 +16,42 @@ import (
 	"github.com/docktermj/go-hello-dependency-injection/service/d"
 	"github.com/docktermj/go-logger/logger"
 	"github.com/docopt/docopt-go"
+	"github.com/karlkfi/inject"
 )
 
 var (
 	programName    = "go-hello-dependency-injection"
-	buildVersion   = "1.0.0"
+	buildVersion   = "2.0.0"
 	buildIteration = "0"
 	functions      = map[string]interface{}{}
+	topContext     context.Context
+	cancel         func()
 )
+
+// Dependency Injected variables.
+
+var (
+	ctx       context.Context
+	myA       *a.A
+	myB       *b.B
+	myC       *c.C
+	myD       *d.D
+	waitGroup *sync.WaitGroup
+)
+
+// Utility function for dependency injection.
+func newWaitGroup() *sync.WaitGroup {
+	return &sync.WaitGroup{}
+}
+
+// Utility function for dependency injection.
+func getTopContext() context.Context {
+	return topContext
+}
+
+// ----------------------------------------------------------------------------
+// Main
+// ----------------------------------------------------------------------------
 
 func main() {
 
@@ -47,7 +75,7 @@ Options:
 
 	// Create top-level context.
 
-	topContext, cancel := context.WithCancel(context.Background())
+	topContext, cancel = context.WithCancel(context.Background())
 	defer cancel()
 
 	// Handle Ctrl-c interrupts to cancel the context.
@@ -80,38 +108,16 @@ Options:
 		}
 	}
 
-	// Setup service synchronization.
+	// Object creation and Dependency Injection (DI).
 
-	waitGroup := sync.WaitGroup{}
-
-	// Object creation and Dependency Injection.
-
-	myA := a.A{
-		Context:   topContext,
-		Greetings: "Hello, world!",
-		WaitGroup: &waitGroup,
-	}
-
-	myB := b.B{
-		Context:   topContext,
-		A:         &myA,
-		WaitGroup: &waitGroup,
-	}
-
-	myC := c.C{
-		Context:   topContext,
-		A:         &myA,
-		B:         &myB,
-		WaitGroup: &waitGroup,
-	}
-
-	myD := d.D{
-		Context:   topContext,
-		A:         &myA,
-		B:         &myB,
-		C:         &myC,
-		WaitGroup: &waitGroup,
-	}
+	di_container := inject.NewGraph()
+	di_container.Define(&waitGroup, inject.NewProvider(newWaitGroup))
+	di_container.Define(&ctx, inject.NewProvider(getTopContext))
+	di_container.Define(&myD, inject.NewAutoProvider(d.New))
+	di_container.Define(&myC, inject.NewAutoProvider(c.New))
+	di_container.Define(&myB, inject.NewAutoProvider(b.New))
+	di_container.Define(&myA, inject.NewAutoProvider(a.New))
+	di_container.ResolveAll()
 
 	// List services to be started.
 
@@ -137,7 +143,6 @@ Options:
 
 	// Wait until all processes are done or termination.
 
-	//	<-topContext.Done()
 	waitGroup.Wait()
 
 	// List services to be stopped.

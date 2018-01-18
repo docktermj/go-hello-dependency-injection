@@ -19,6 +19,19 @@ type C struct {
 	iteration int
 }
 
+func New(ctx context.Context, myA *a.A, myB *b.B, waitGroup *sync.WaitGroup) *C {
+	return &C{
+		Context:   ctx,
+		A:         myA,
+		B:         myB,
+		WaitGroup: waitGroup,
+	}
+}
+
+// ----------------------------------------------------------------------------
+// Utility methods
+// ----------------------------------------------------------------------------
+
 func (c C) Speak() string {
 	return fmt.Sprintf("C says that: %s", c.B.Speak())
 }

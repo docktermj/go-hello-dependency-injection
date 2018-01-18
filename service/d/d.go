@@ -21,6 +21,20 @@ type D struct {
 	iteration int
 }
 
+func New(ctx context.Context, myA *a.A, myB *b.B, myC *c.C, waitGroup *sync.WaitGroup) *D {
+	return &D{
+		Context:   ctx,
+		A:         myA,
+		B:         myB,
+		C:         myC,
+		WaitGroup: waitGroup,
+	}
+}
+
+// ----------------------------------------------------------------------------
+// Utility methods
+// ----------------------------------------------------------------------------
+
 func (d D) Speak() string {
 	return fmt.Sprintf("D says that: %s", d.C.Speak())
 }
