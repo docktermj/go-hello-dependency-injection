@@ -16,6 +16,7 @@ import (
 	"github.com/docktermj/go-hello-dependency-injection/service/d"
 	"github.com/docktermj/go-logger/logger"
 	"github.com/docopt/docopt-go"
+	"github.com/karlkfi/inject"
 )
 
 var (
@@ -23,6 +24,14 @@ var (
 	buildVersion   = "1.0.0"
 	buildIteration = "0"
 	functions      = map[string]interface{}{}
+
+    message = "Hello world!"
+	topContext context.Context
+	myA        *a.A
+	myB        *b.B
+	myC        *c.C
+	myD        *d.D
+	waitGroup  *sync.WaitGroup
 )
 
 func main() {
@@ -79,39 +88,49 @@ Options:
 			os.Exit(0)
 		}
 	}
+	
+//	message := "Hello world 2!"
 
 	// Setup service synchronization.
 
-	waitGroup := sync.WaitGroup{}
+	waitGroup = &sync.WaitGroup{}
 
-	// Object creation and Dependency Injection.
+	// Object creation and Dependency Injection (DI).
 
-	myA := a.A{
-		Context:   topContext,
-		Greetings: "Hello, world!",
-		WaitGroup: &waitGroup,
-	}
+	di_container := inject.NewGraph()
+//	inject.ExtractAssignable(di_container, &topContext)
+	di_container.Define(&myA, inject.NewProvider(a.New, &topContext, &message, waitGroup))
+	di_container.Define(&myB, inject.NewProvider(b.New, &topContext, &myA, waitGroup))
+	di_container.Define(&myC, inject.NewProvider(c.New, &topContext, &myA, &myB, waitGroup))
+	di_container.Define(&myD, inject.NewProvider(d.New, &topContext, &myA, &myB, &myC, waitGroup))
+	di_container.ResolveAll()
 
-	myB := b.B{
-		Context:   topContext,
-		A:         &myA,
-		WaitGroup: &waitGroup,
-	}
-
-	myC := c.C{
-		Context:   topContext,
-		A:         &myA,
-		B:         &myB,
-		WaitGroup: &waitGroup,
-	}
-
-	myD := d.D{
-		Context:   topContext,
-		A:         &myA,
-		B:         &myB,
-		C:         &myC,
-		WaitGroup: &waitGroup,
-	}
+	//	myA := a.A{
+	//		Context:   topContext,
+	//		Greetings: "Hello, world!",
+	//		WaitGroup: &waitGroup,
+	//	}
+	//
+	//	myB := b.B{
+	//		Context:   topContext,
+	//		A:         &myA,
+	//		WaitGroup: &waitGroup,
+	//	}
+	//
+	//	myC := c.C{
+	//		Context:   topContext,
+	//		A:         &myA,
+	//		B:         &myB,
+	//		WaitGroup: &waitGroup,
+	//	}
+	//
+	//	myD := d.D{
+	//		Context:   topContext,
+	//		A:         &myA,
+	//		B:         &myB,
+	//		C:         &myC,
+	//		WaitGroup: &waitGroup,
+	//	}
 
 	// List services to be started.
 

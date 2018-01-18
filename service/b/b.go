@@ -12,10 +12,22 @@ import (
 
 type B struct {
 	Context   context.Context
-	A         *a.A
+	A         a.A
 	WaitGroup *sync.WaitGroup
 	iteration int
 }
+
+func New(ctx context.Context, myA *a.A, waitGroup sync.WaitGroup) *B {
+	return &B{
+		Context:   ctx,
+		A: *myA,
+		WaitGroup: &waitGroup,
+	}
+}
+
+// ----------------------------------------------------------------------------
+// Utility methods
+// ----------------------------------------------------------------------------
 
 func (b B) Speak() string {
 	return fmt.Sprintf("B says that: %s", b.A.Speak())

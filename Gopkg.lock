@@ -13,9 +13,15 @@
   revision = "784ddc588536785e7299f7272f39101f7faccc3f"
   version = "0.6.2"
 
+[[projects]]
+  branch = "master"
+  name = "github.com/karlkfi/inject"
+  packages = ["."]
+  revision = "27c5323a07f81a37802552bb0734fc4bb649aaa1"
+
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "8032730a489f40fefabc402666e04e21a9c99c6cbed92c71ee4ed6bf7ac741fe"
+  inputs-digest = "7ea40198ae94a9661a060b90946562c5b1298adc3da790233c9468a33cd26235"
   solver-name = "gps-cdcl"
   solver-version = 1
