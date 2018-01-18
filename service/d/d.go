@@ -43,11 +43,11 @@ func NewNoB(ctx context.Context, myA *a.A, myC *c.C, waitGroup *sync.WaitGroup) 
 // Utility methods
 // ----------------------------------------------------------------------------
 
-func (d D) Speak() string {
+func (d *D) Speak() string {
 	return fmt.Sprintf("D says that: %s", d.C.Speak())
 }
 
-func (d D) Speak2() string {
+func (d *D) Speak2() string {
 	return fmt.Sprintf("D says that: %s", d.A.Speak())
 }
 
@@ -55,7 +55,7 @@ func (d D) Speak2() string {
 // Service interface
 // ----------------------------------------------------------------------------
 
-func (d D) Start() error {
+func (d *D) Start() error {
 
 	// Synchronize the services at shutdown.
 
@@ -86,7 +86,7 @@ PrintLoop:
 	return nil
 }
 
-func (d D) Stop() error {
+func (d *D) Stop() error {
 
 	// Synchronize the services at shutdown.
 

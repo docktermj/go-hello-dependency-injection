@@ -29,7 +29,7 @@ func New(ctx context.Context, myA *a.A, waitGroup *sync.WaitGroup) *B {
 // Utility methods
 // ----------------------------------------------------------------------------
 
-func (b B) Speak() string {
+func (b *B) Speak() string {
 	return fmt.Sprintf("B says that: %s", b.A.Speak())
 }
 
@@ -37,7 +37,7 @@ func (b B) Speak() string {
 // Service interface
 // ----------------------------------------------------------------------------
 
-func (b B) Start() error {
+func (b *B) Start() error {
 
 	// Synchronize the services at shutdown.
 
@@ -67,7 +67,7 @@ PrintLoop:
 	return nil
 }
 
-func (b B) Stop() error {
+func (b *B) Stop() error {
 
 	// Synchronize the services at shutdown.
 
