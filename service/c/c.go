@@ -13,8 +13,8 @@ import (
 
 type C struct {
 	Context   context.Context
-	A         a.A
-	B         b.B
+	A         *a.A
+	B         *b.B
 	WaitGroup *sync.WaitGroup
 	iteration int
 }
@@ -22,8 +22,8 @@ type C struct {
 func New(ctx context.Context, myA *a.A, myB *b.B, waitGroup sync.WaitGroup) *C {
 	return &C{
 		Context:   ctx,
-		A:        *myA,
-		B:        *myB,
+		A:         myA,
+		B:         myB,
 		WaitGroup: &waitGroup,
 	}
 }

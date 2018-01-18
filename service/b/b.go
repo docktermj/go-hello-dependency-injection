@@ -12,7 +12,7 @@ import (
 
 type B struct {
 	Context   context.Context
-	A         a.A
+	A         *a.A
 	WaitGroup *sync.WaitGroup
 	iteration int
 }
@@ -20,7 +20,7 @@ type B struct {
 func New(ctx context.Context, myA *a.A, waitGroup sync.WaitGroup) *B {
 	return &B{
 		Context:   ctx,
-		A: *myA,
+		A:         myA,
 		WaitGroup: &waitGroup,
 	}
 }
