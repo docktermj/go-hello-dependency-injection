@@ -2,26 +2,36 @@
 
 
 [[projects]]
+  digest = "1:49087094f845074906c447700828d9e23352892b9320bae19419bc9d0011ada6"
   name = "github.com/docktermj/go-logger"
   packages = ["logger"]
+  pruneopts = ""
   revision = "ca550aca93f91a094ed896e4619d3f2a69a95f71"
   version = "1.0.3"
 
 [[projects]]
+  digest = "1:d741c40674d5d73ae7bfad6a4b5c920bcc2492ce776ea606d83c91a05a093e0a"
   name = "github.com/docopt/docopt-go"
   packages = ["."]
+  pruneopts = ""
   revision = "784ddc588536785e7299f7272f39101f7faccc3f"
   version = "0.6.2"
 
 [[projects]]
   branch = "master"
+  digest = "1:1185aa143316711fc447dc1032b59f551d43a0fd5463f55cf9c16620f6259883"
   name = "github.com/karlkfi/inject"
   packages = ["."]
+  pruneopts = ""
   revision = "27c5323a07f81a37802552bb0734fc4bb649aaa1"
 
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
-  inputs-digest = "7ea40198ae94a9661a060b90946562c5b1298adc3da790233c9468a33cd26235"
+  input-imports = [
+    "github.com/docktermj/go-logger/logger",
+    "github.com/docopt/docopt-go",
+    "github.com/karlkfi/inject",
+  ]
   solver-name = "gps-cdcl"
   solver-version = 1
